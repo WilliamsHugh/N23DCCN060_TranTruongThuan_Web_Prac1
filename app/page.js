@@ -10,13 +10,12 @@ async function getProducts() {
     return await res.json();
   } catch (error) {
     console.error("Failed to fetch products:", error);
-    return []; // trả về mảng rỗng thay vì crash
+    return [];
   }
 }
 
 export default async function HomePage() {
   const products = await getProducts();
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -25,9 +24,15 @@ export default async function HomePage() {
           <h2 className="text-3xl font-bold text-gray-900">All Products</h2>
           <p className="text-gray-500 mt-1">{products.length} items available</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "24px",
+          }}
+        >
           {products.map((item) => (
-            <a key={item.id} href={`/product/${item.id}`}>
+            <a key={item.id} href={`/product/${item.id}`} style={{ display: "block" }}>
               <ProductCard product={item} />
             </a>
           ))}
