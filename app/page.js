@@ -2,8 +2,16 @@ import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 
 async function getProducts() {
-  const res = await fetch("https://fakestoreapi.com/products");
-  return res.json();
+  try {
+    const res = await fetch("https://fakestoreapi.com/products", {
+      cache: "no-store",
+    });
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    return []; // trả về mảng rỗng thay vì crash
+  }
 }
 
 export default async function HomePage() {
