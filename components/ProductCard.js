@@ -1,38 +1,66 @@
+"use client";
+
+import Button from "@/components/Button";
+
 export default function ProductCard({ product }) {
+  if (!product) return null;
+
   return (
-    <div className="h-full bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow duration-200 flex flex-col">
+    <div
+      className="h-full bg-white flex flex-col group cursor-pointer rounded-2xl overflow-hidden"
+      style={{
+        border: "1.5px solid #111827",
+        transition: "transform 0.25s ease, box-shadow 0.25s ease",
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)";
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "none";
+      }}
+    >
       {/* Ảnh */}
-      <div className="bg-gray-50 p-6 flex items-center justify-center" style={{ height: "200px" }}>
+      <div
+        className="relative flex items-center justify-center bg-white overflow-hidden"
+        style={{ height: "260px" }}
+      >
         <img
           src={product.image}
           alt={product.title}
-          className="max-h-full w-full object-contain"
+          className="max-h-full w-full object-contain p-6 transition-transform duration-300 group-hover:scale-105"
         />
       </div>
 
       {/* Nội dung */}
-      <div className="p-4 flex flex-col flex-1">
-        <span className="text-xs text-blue-600 font-medium uppercase tracking-wide mb-1">
+      <div className="flex flex-col items-center text-center px-4 pb-4 flex-1">
+        <div className="w-full border-t border-gray-100 mb-3"></div>
+
+        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
           {product.category}
-        </span>
-        <h2 className="text-sm font-semibold text-gray-800 line-clamp-2 flex-1 mb-3">
+        </p>
+        <h2 className="text-sm font-bold text-gray-900 line-clamp-2 mb-2 leading-snug">
           {product.title}
         </h2>
 
         {/* Rating */}
         <div className="flex items-center gap-1 mb-3">
-          <span className="text-yellow-400 text-sm">★</span>
-          <span className="text-xs text-gray-500">
-            {product.rating?.rate} ({product.rating?.count})
-          </span>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <span
+              key={i}
+              className={`text-sm ${i < Math.round(product.rating?.rate || 0) ? "text-yellow-400" : "text-gray-200"}`}
+            >
+              ★
+            </span>
+          ))}
+          <span className="text-xs text-gray-400 ml-1">({product.rating?.count})</span>
         </div>
 
         {/* Giá + nút */}
-        <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
-          <span className="text-lg font-bold text-gray-900">${product.price}</span>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors">
-            Add to cart
-          </button>
+        <div className="mt-auto w-full flex flex-col items-center gap-3">
+          <span className="text-lg font-bold text-green-600">${product.price}</span>
+          <Button variant="outline">Add to Cart</Button>
         </div>
       </div>
     </div>

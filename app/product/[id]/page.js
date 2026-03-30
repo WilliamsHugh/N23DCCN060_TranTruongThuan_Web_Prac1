@@ -16,8 +16,8 @@ export default async function ProductDetailPage({ params }) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <main className="max-w-5xl mx-auto px-4 py-10">
-          <p className="text-red-500">Không tìm thấy sản phẩm.</p>
+        <main className="max-w-5xl mx-auto px-6 py-10">
+          <p className="text-red-500 mb-3">Không tìm thấy sản phẩm.</p>
           <a href="/" className="text-blue-600 hover:underline text-sm">← Quay lại</a>
         </main>
       </div>
@@ -27,61 +27,71 @@ export default async function ProductDetailPage({ params }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <main className="max-w-5xl mx-auto px-4 py-10">
+      <main className="max-w-5xl mx-auto px-6 py-10">
 
         {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-6">
+        <div className="text-sm text-gray-400 mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-blue-600 transition-colors">Home</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-800 font-medium line-clamp-1">{product.title}</span>
+          <span>/</span>
+          <span className="text-gray-700 font-medium line-clamp-1">{product.title}</span>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        {/* Card chi tiết */}
+        <div className="bg-white rounded-3xl overflow-hidden"
+          style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}
+        >
           <div className="flex flex-col md:flex-row">
 
             {/* Ảnh */}
-            <div className="md:w-2/5 bg-gray-50 flex items-center justify-center p-10 border-b md:border-b-0 md:border-r border-gray-100">
+            <div className="md:w-2/5 bg-gray-50 flex items-center justify-center p-12">
               <img
                 src={product.image}
                 alt={product.title}
                 className="max-h-72 w-full object-contain"
+                style={{ filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.1))" }}
               />
             </div>
 
             {/* Thông tin */}
-            <div className="md:w-3/5 p-8 flex flex-col">
-              <span className="text-xs text-blue-600 font-medium uppercase tracking-wide mb-2">
-                {product.category}
-              </span>
-              <h1 className="text-2xl font-bold text-gray-900 mb-3">
-                {product.title}
-              </h1>
-
-              {/* Rating */}
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex text-yellow-400 text-sm">
-                  {"★".repeat(Math.round(product.rating?.rate || 0))}
-                  {"☆".repeat(5 - Math.round(product.rating?.rate || 0))}
-                </div>
-                <span className="text-sm text-gray-500">
-                  {product.rating?.rate} / 5 · {product.rating?.count} reviews
+            <div className="md:w-3/5 p-10 flex flex-col justify-between">
+              <div>
+                <span className="inline-block bg-blue-50 text-blue-600 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full mb-4">
+                  {product.category}
                 </span>
+                <h1 className="text-2xl font-bold text-gray-900 leading-snug mb-4">
+                  {product.title}
+                </h1>
+
+                {/* Rating */}
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="flex text-yellow-400 text-base">
+                    {"★".repeat(Math.round(product.rating?.rate || 0))}
+                    <span className="text-gray-200">
+                      {"★".repeat(5 - Math.round(product.rating?.rate || 0))}
+                    </span>
+                  </div>
+                  <span className="text-sm text-gray-500">
+                    {product.rating?.rate} · {product.rating?.count} reviews
+                  </span>
+                </div>
+
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  {product.description}
+                </p>
               </div>
 
-              {/* Giá */}
-              <div className="bg-gray-50 rounded-lg px-4 py-3 mb-4 inline-block w-fit">
-                <span className="text-3xl font-bold text-blue-600">${product.price}</span>
-              </div>
-
-              {/* Mô tả */}
-              <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-1">
-                {product.description}
-              </p>
-
-              {/* Nút */}
-              <div className="flex gap-3 flex-wrap pt-4 border-t border-gray-100">
-                <Button variant="primary">Add to Cart</Button>
-                <Button variant="outline">Wishlist</Button>
+              {/* Giá + nút */}
+              <div className="mt-8 pt-6 border-t border-gray-100">
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+                  <span className="text-sm text-green-600 font-medium bg-green-50 px-3 py-1 rounded-full">
+                    In Stock
+                  </span>
+                </div>
+                <div className="flex gap-3 flex-wrap pt-4 border-t border-gray-100">
+                    <Button variant="primary">Add to Cart</Button>
+                    <Button variant="outline">Wishlist</Button>
+                </div>
               </div>
             </div>
 
@@ -89,8 +99,8 @@ export default async function ProductDetailPage({ params }) {
         </div>
       </main>
 
-      <footer className="border-t border-gray-200 bg-white mt-16 py-6 text-center text-sm text-gray-400">
-        © 2025 MyStore. All rights reserved.
+      <footer className="mt-20 bg-white border-t border-gray-100 py-8 text-center text-sm text-gray-400">
+        © 2025 MyStore · All rights reserved
       </footer>
     </div>
   );

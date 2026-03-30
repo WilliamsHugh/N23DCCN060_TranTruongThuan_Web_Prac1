@@ -17,23 +17,19 @@ async function getProducts() {
 export default async function HomePage() {
   const products = await getProducts();
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Banner */}
-      <div className="bg-blue-600 text-white text-center py-10 px-4">
-        <h1 className="text-3xl font-bold mb-2">Welcome to MyStore</h1>
-        <p className="text-blue-100 text-sm">Discover our latest products at great prices</p>
-      </div>
-
-      <main className="max-w-7xl mx-auto px-4 py-10">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-800">All Products</h2>
-          <span className="text-sm text-gray-500">{products.length} items</span>
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">All Products</h2>
+          <div className="w-12 h-0.5 bg-gray-900 mx-auto mt-3"></div>
         </div>
 
+        {/* Grid */}
         <div className="product-grid">
-          {products.map((item) => (
+          {products.filter(item => item && item.id).map((item) => (
             <a key={item.id} href={`/product/${item.id}`} style={{ display: "block", height: "100%" }}>
               <ProductCard product={item} />
             </a>
@@ -41,9 +37,8 @@ export default async function HomePage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white mt-16 py-6 text-center text-sm text-gray-400">
-        © 2025 MyStore. All rights reserved.
+      <footer className="mt-20 border-t border-gray-100 py-8 text-center text-xs text-gray-400 tracking-widest uppercase">
+        © 2025 MyStore · All rights reserved
       </footer>
     </div>
   );

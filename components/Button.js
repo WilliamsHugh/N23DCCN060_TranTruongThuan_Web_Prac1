@@ -1,9 +1,9 @@
 export default function Button({ children, variant = "primary" }) {
   const styles = variant === "primary"
-    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
-    : "border border-gray-300 text-gray-700 hover:bg-gray-50";
+    ? "bg-gray-900 hover:bg-gray-700 text-white border border-gray-900"
+    : "bg-white border border-gray-800 text-gray-800 hover:bg-gray-900 hover:text-white";
   return (
-    <button className={`${styles} px-5 py-2.5 rounded-lg text-sm font-medium transition-colors`}>
+    <button className={`${styles} w-full px-4 py-2.5 text-xs font-semibold tracking-widest uppercase rounded-md transition-all duration-200`}>
       {children}
     </button>
   );
